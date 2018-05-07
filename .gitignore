@@ -96,7 +96,5 @@ ENV/
 .ropeproject
 
 .gitignore
-PE Documentation/
-static/
-templates/
-venv/include/
+
+idea/ workspace.xml
