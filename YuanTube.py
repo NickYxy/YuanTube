@@ -1,4 +1,5 @@
 from flask import Flask
+from flask import render_template
 from flask import request
 
 app = Flask(__name__)
@@ -10,9 +11,9 @@ def login():
     else:
         return 'This is a get request'
 
-@app.route('/hello/<int:user_id>')
-def hello_world(user_id):
-    return 'User ID: %d' % user_id
+@app.route('/hello/<name>')
+def hello_world(name=None):
+    return render_template('hello_test.html', name=name)
 
 
 if __name__ == '__main__':
