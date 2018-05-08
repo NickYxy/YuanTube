@@ -2,6 +2,7 @@ from flask import Flask
 from flask import render_template
 from flask import request
 from flask_script
+from flask import app
 
 app = Flask(__name__)
 
