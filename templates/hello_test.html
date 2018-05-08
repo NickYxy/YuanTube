@@ -10,6 +10,29 @@
     {% endif %}
 </head>
 <body>
+<div class="main container page-wrap">
+    {% block body %}
+    {% endblock %}
+</div>
 
+{% block foot %}
+    <footer class="bs-docs-footer">
+        <div class="container">
+            <ul class="footer-links">
+                <li><a href="#">GitHub 仓库</a></li>
+                <li><a href="#">协议</a></li>
+                <li><a href="#">加入我们</a></li>
+                <li><a href="#">关于</a></li>
+            </ul>
+            <p>
+                Designed and built with all the love in the world by @Suzumiya.
+            </p>
+            <p>
+                本项目源码受 MIT 开源协议保护.
+            </p>
+        </div>
+
+    </footer>
+{% endblock %}
 </body>
 </html>
