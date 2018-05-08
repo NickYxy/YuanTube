@@ -6,6 +6,8 @@ from flask import app
 
 app = Flask(__name__)
 
+#import blueprints
+
 @app.route('/login',methods=['POST','GET'])
 def login():
     if request.method == 'POST':
