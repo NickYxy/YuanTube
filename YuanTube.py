@@ -1,10 +1,14 @@
+import logging
+
 from flask import Flask
 from flask import render_template
 from flask import request
-from flask_script
-from flask import app
+from flask_script import Manager, Shell, Command
+
 
 app = Flask(__name__)
+
+manager = Manager(app)
 
 #import blueprints
 
