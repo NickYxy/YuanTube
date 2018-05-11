@@ -11,7 +11,7 @@ import os
 #评分的展示？
 
 
-class Product(MongoModel):
+class Movie(MongoModel):
     @classmethod
     def _fields(cls):
         fields = [
@@ -40,16 +40,15 @@ class Product(MongoModel):
         m = super().new(form)
         return m
 
-    @property
-    def users(self):
-        from models.record import Record
-        from models.user import User
-        reports = Record.find(product_uuid=self.uuid)
-        res = []
-        if reports:
-            user_uuid = set(r.client_uuid for r in reports)
-            res = [User.get_uuid(uuid) for uuid in user_uuid]
-        return res
+    # @property
+    # def users(self):
+    #     from models.user import User
+    #     reports = Record.find(product_uuid=self.uuid)
+    #     res = []
+    #     if reports:
+    #         user_uuid = set(r.client_uuid for r in reports)
+    #         res = [User.get_uuid(uuid) for uuid in user_uuid]
+    #     return res
 
     def update_pic(self, pic):
         allowed_type = ['jpg', 'jpeg', 'gif', 'png']
