@@ -100,9 +100,3 @@ def email_verify_required(f):
     return function
 
 
-def get_cats():
-    from models.category import Category
-    cats = Category.find(father_name='')
-    for c in cats:
-        c.sons = Category.find(father_name=c.name)
-    return cats
