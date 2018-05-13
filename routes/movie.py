@@ -1,7 +1,7 @@
 from . import *
 from models.movie import Movie
 
-main = Blueprint('product', __name__)
+main = Blueprint('movie', __name__)
 
 
 @main.route('/detail/<uuid>')

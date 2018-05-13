@@ -14,6 +14,9 @@ from user_util.utils import *
 import json
 import random
 
+main = Blueprint('user', __name__)
+
+
 def current_user():
     uid = int(session.get('uid', -1))
     u = User.get(uid)

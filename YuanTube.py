@@ -13,7 +13,7 @@ manager = Manager(app)
 #import blueprints
 def register_routes(app):
     from routes.user import main as routes_user
-    from routes.product import main as routes_product
+    from routes.movie import main as routes_movie
     from routes.index import main as routes_index
     from routes.admin import main as routes_admin
     from routes.api import main as routes_api
