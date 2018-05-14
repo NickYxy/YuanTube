@@ -10,7 +10,12 @@ app = Flask(__name__)
 
 manager = Manager(app)
 
-#import blueprints
+def make_shell_context():
+    from models import db
+    return dict(app=app, db=db)
+
+
+# ----------------Error Handler----------------- #
 def register_routes(app):
     from routes.user import main as routes_user
     from routes.movie import main as routes_movie
@@ -31,7 +36,7 @@ def login():
         return 'This is a get request'
 
 
-#----------------Error Handler-----------------#
+# ----------------Error Handler----------------- #
 @app.route('/error')
 def error():
     abort(404)
@@ -46,6 +51,27 @@ def page_not_found(error):
 def hello_world(name=None):
     return render_template('hello_test.html', name=name)
 
+
+# ----------------Config Options----------------- #
+def configure_app():
+    from config import key
+    app.secret_key = key.secret_key
+    from config.config import config_dict
+    app.config.update(config_dict)
+    register_routes(app)
+    manager.add_command('shell', Shell(make_context=make_shell_context))
+    # 设置 log, 否则输出会被 gunicorn 吃掉
+    if not app.debug:
+        stream_handler = logging.StreamHandler()
+        stream_handler.setLevel(logging.INFO)
+        app.logger.addHandler(stream_handler)
+
+
+def configured_app():
+    configure_app()
+    return app
+
+
 @manager.command
 def server():
     app.config['TEMPLATES_AUTO_RELOAD'] = True
@@ -57,5 +83,7 @@ def server():
     )
     app.run(**config)
 
+
 if __name__ == '__main__':
+    configure_app()
     manager.run()
