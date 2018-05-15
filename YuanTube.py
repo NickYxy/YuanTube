@@ -15,7 +15,7 @@ def make_shell_context():
     return dict(app=app, db=db)
 
 
-# ----------------Error Handler----------------- #
+# ----------------BluePrints Register----------------- #
 def register_routes(app):
     from routes.user import main as routes_user
     from routes.movie import main as routes_movie
