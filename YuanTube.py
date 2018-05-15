@@ -27,15 +27,6 @@ def register_routes(app):
     app.register_blueprint(routes_admin, url_prefix='/admin')
 
 
-
-@app.route('/login',methods=['POST','GET'])
-def login():
-    if request.method == 'POST':
-        return 'This is a post request'
-    else:
-        return 'This is a get request'
-
-
 # ----------------Error Handler----------------- #
 @app.route('/error')
 def error():

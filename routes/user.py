@@ -16,15 +16,13 @@ import random
 
 main = Blueprint('user', __name__)
 
-Model = User
-
 
 @main.route('/login')
 def index():
     return render_template('user/login.html')
 
 
-@main.route('login', method=['POST'])
+@main.route('login', methods=['POST'])
 def login():
     form = request.form
     mobile = form.get('mobile', '')
@@ -41,7 +39,7 @@ def login():
     else:
         flash('用户名密码错误！', 'warning')
 
-        
+
 def current_user():
     uid = int(session.get('uid', -1))
     u = User.get(uid)
@@ -61,77 +59,85 @@ def login_required(f):
     return function
 
 
-def admin_required(f):
-    @wraps(f)
-    def function(*args, **kwargs):
-        if current_user() is None:
-            return redirect(url_for('user.index'))
-        if not current_user().is_admin():
-            return redirect(url_for('user.index'))
-        return f(*args, **kwargs)
-
-    return function
+@main.route('/register')
+# @login_required
+def register_page():
+    return render_template('user/register.html')
 
 
-def manager_required(f):
-    @wraps(f)
-    def function(*args, **kwargs):
-        if current_user() is None:
-            return redirect(url_for('user.index'))
-        if not current_user().is_manager():
-            return redirect(url_for('user.index'))
-        return f(*args, **kwargs)
-
-    return function
-
-
-def clients_required(f):
-    @wraps(f)
-    def function(*args, **kwargs):
-        if current_user() is None:
-            return redirect(url_for('user.index'))
-        if not current_user().is_clients():
-            return redirect(url_for('user.index'))
-        return f(*args, **kwargs)
-    return function
-
-
-def finance_required(f):
-    @wraps(f)
-    def function(*args, **kwargs):
-        if current_user() is None:
-            return redirect(url_for('user.index'))
-        if not current_user().is_finance():
-            return redirect(url_for('user.index'))
-        return f(*args, **kwargs)
-
-    return function
+@main.route('/register', methods=['POST'])
+def register():
+    form = request.form
+    captcha = form.get('captcha', '').lower()
+    if captcha != session.get('captcha', 'no captcha!'):
+        flash('图片验证码错误', 'warning')
+        return redirect(url_for('user.register'))
+    if not MsgCode.valid_code(form, use="register"):
+        flash('短信验证码错误', 'warning')
+        return redirect(url_for('user.register'))
+    status, msgs = User.valid(form)
+    if status is True:
+        u = User.new(form)
+        session['uid'] = u.id
+        flash('注册成功', 'success')
+        Log.log(u, '注册账号', request, '[{}] 注册账号'.format(u.mobile))
+        return redirect(url_for('user.register_success'))
+    else:
+        for msg in msgs:
+            flash(msg, 'warning')
+        return redirect(url_for('user.register'))
 
 
-def cart_not_empty_required(f):
-    @wraps(f)
-    def function(*args, **kwargs):
-        if not current_user().cart_not_empty():
-            return redirect(url_for('index.index'))
-        return f(*args, **kwargs)
-
-    return function
+@main.route('/register/success')
+@login_required
+def register_success():
+    u = current_user()
+    return render_template('user/register_success.html', u=u)
 
 
-def email_verify_required(f):
-    @wraps(f)
-    def function(*args, **kwargs):
-        if not current_user().email_verified():
-            flash('邮箱未验证，请先验证邮箱', 'warning')
-            return redirect(url_for('user.profile'))
-        return f(*args, **kwargs)
-
-    return function
+@main.route('/password/forget')
+def forget_password_page():
+    return render_template('user/forget_password.html')
 
 
-# def get_cats():
-#     from models.category import Category
-#     cats = Category.find(father_name='')
-#     for c in cats:
-#         c.sons = Category.find(father_name=c.name)
-#     return cats
+@main.route('/password/forget', methods=['POST'])
+def forget_password():
+    form = request.form
+    captcha = form.get('captcha', '').lower()
+    if captcha != session.get('captcha', 'no captcha!'):
+        flash('图片验证码错误', 'warning')
+        return redirect(url_for('user.forget_password_page'))
+    if not MsgCode.valid_code(form, use="forget_password"):
+        flash('短信验证码错误', 'warning')
+        return redirect(url_for('user.forget_password_page'))
+    if User.forget_password(form):
+        flash('密码已重置', 'success')
+        return redirect(url_for('index.index'))
+    else:
+        flash('手机号或密码格式错误', 'warning')
+        return redirect(url_for('user.forget_password_page'))
+
+
+@main.route('/password/update')
+@login_required
+def update_password_page():
+    u = current_user()
+    return render_template('user/update_password.html', u=u)
+
+
+@main.route('/password/update', methods=['POST'])
+@login_required
+def update_password():
+    form = request.form
+    u = current_user()
+    status, msgs = u.update_password(form)
+    if status:
+        flash('密码已重置', 'success')
+        Log.log(u, '修改密码', request, '[{}] 修改了登录密码'.format(u.log_name))
+        return redirect(url_for('index.index'))
+    else:
+        for msg in msgs:
+            flash(msg, 'warning')
+        return redirect(url_for('user.update_password_page'))
+
+
