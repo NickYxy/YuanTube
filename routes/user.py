@@ -16,7 +16,32 @@ import random
 
 main = Blueprint('user', __name__)
 
+Model = User
 
+
+@main.route('/login')
+def index():
+    return render_template('user/login.html')
+
+
+@main.route('login', method=['POST'])
+def login():
+    form = request.form
+    mobile = form.get('mobile', '')
+    u = User.find_one(mobile=mobile)
+    admin = User.find_one(username=mobile, role='admin')
+    if admin and admin.validate_login(form):
+        session['uid'] = admin.id
+        return redirect(url_for('index.index'))
+    elif u is not None and u.validate_login(form):
+        session['uid'] = u.id
+        return redirect(url_for('index.index'))
+    elif not u and not admin:
+        flash('此手机号未注册！', 'warning')
+    else:
+        flash('用户名密码错误！', 'warning')
+
+        
 def current_user():
     uid = int(session.get('uid', -1))
     u = User.get(uid)
