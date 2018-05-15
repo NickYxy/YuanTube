@@ -20,12 +20,12 @@ def register_routes(app):
     from routes.user import main as routes_user
     from routes.movie import main as routes_movie
     from routes.admin import main as routes_admin
-
+    from routes.img import main as routes_img
 
     app.register_blueprint(routes_user, url_prefix='/user')
     app.register_blueprint(routes_movie, url_prefix='/movie')
     app.register_blueprint(routes_admin, url_prefix='/admin')
-
+    app.register_blueprint(routes_img, url_prefix='/img')
 
 # ----------------Error Handler----------------- #
 @app.route('/error')
