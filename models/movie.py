@@ -40,15 +40,6 @@ class Movie(MongoModel):
         m = super().new(form)
         return m
 
-    # @property
-    # def users(self):
-    #     from models.user import User
-    #     reports = Record.find(product_uuid=self.uuid)
-    #     res = []
-    #     if reports:
-    #         user_uuid = set(r.client_uuid for r in reports)
-    #         res = [User.get_uuid(uuid) for uuid in user_uuid]
-    #     return res
 
     def update_pic(self, pic):
         allowed_type = ['jpg', 'jpeg', 'gif', 'png']
