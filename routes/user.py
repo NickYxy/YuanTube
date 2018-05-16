@@ -80,7 +80,6 @@ def register():
         u = User.new(form)
         session['uid'] = u.id
         flash('注册成功', 'success')
-        Log.log(u, '注册账号', request, '[{}] 注册账号'.format(u.mobile))
         return redirect(url_for('user.register_success'))
     else:
         for msg in msgs:
