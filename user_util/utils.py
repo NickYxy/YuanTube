@@ -19,3 +19,15 @@ def short_uuid():
     seed = str(uuid4())
     short_seed = seed.split('-')[-1]
     return short_seed
+
+def api_result(success=False, message='', data=''):
+    r = {
+        'success': success,
+        'message': message,
+        'data': data,
+    }
+    if message:
+        r['message'] = message
+    if data:
+        r['data'] = data
+    return json.dumps(r)

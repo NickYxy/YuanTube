@@ -10,6 +10,7 @@ from flask import session
 from flask import flash
 from models.user import User
 from functools import wraps
+from models.msgcode import MsgCode
 from user_util.utils import *
 import json
 import random
@@ -132,7 +133,6 @@ def update_password():
     status, msgs = u.update_password(form)
     if status:
         flash('密码已重置', 'success')
-        Log.log(u, '修改密码', request, '[{}] 修改了登录密码'.format(u.log_name))
         return redirect(url_for('index.index'))
     else:
         for msg in msgs:
