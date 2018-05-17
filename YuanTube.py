@@ -4,7 +4,7 @@ from flask import Flask
 from flask import render_template
 from flask import request
 from flask_script import Manager, Shell, Command
-from flask import abort
+
 
 app = Flask(__name__)
 
@@ -26,16 +26,6 @@ def register_routes(app):
     app.register_blueprint(routes_movie, url_prefix='/movie')
     app.register_blueprint(routes_admin, url_prefix='/admin')
     app.register_blueprint(routes_img, url_prefix='/img')
-
-# ----------------Error Handler----------------- #
-@app.route('/error')
-def error():
-    abort(404)
-
-
-@app.errorhandler(404)
-def page_not_found(error):
-    return render_template('error/404.html'),404
 
 
 # ----------------Config Options----------------- #
