@@ -38,11 +38,6 @@ def page_not_found(error):
     return render_template('error/404.html'),404
 
 
-@app.route('/hello/<name>')
-def hello_world(name=None):
-    return render_template('hello_test.html', name=name)
-
-
 # ----------------Config Options----------------- #
 def configure_app():
     from config import key
