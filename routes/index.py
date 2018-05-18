@@ -4,7 +4,7 @@ from . import *
 main = Blueprint('index', __name__)
 
 
-@main.route('index')
+@main.route('/')
 @login_required
 def index():
     u = current_user()
