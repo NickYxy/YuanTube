@@ -2,11 +2,13 @@ __author__ = 'nickyuan'
 
 from user_util.utils import *
 from config import config
-#导入db配置
+# 导入db配置
 db = config.db
+
 
 def timestamp():
     return int(time.time())
+
 
 class ModelMixin(object):
     pass
@@ -14,18 +16,18 @@ class ModelMixin(object):
 
 def next_id(name):
     query = {
-        'name':name
+        'name': name
     }
     update = {
-        '$inc':{
-            'seq':1
+        '$inc': {
+            'seq': 1
         }
     }
     kwargs = {
-        'query':query,
-        'update':update,
-        'upsert':True,
-        'new':True,
+        'query': query,
+        'update': update,
+        'upsert': True,
+        'new': True,
     }
     doc = db['data_id']
     new_id = doc.find_and_modify(**kwargs).get('seq')
@@ -49,7 +51,6 @@ class MongoModel(object):
     @classmethod
     def has(cls, **kwargs):
         return cls.find_one(**kwargs) is not None
-
 
     def __repr__(self):
         class_name = self.__class__.__name__
@@ -99,11 +100,9 @@ class MongoModel(object):
         setattr(m, '_id', bson['_id'])
         return m
 
-
     @classmethod
     def all(cls):
         return cls.find()
-
 
     @classmethod
     def find(cls, **kwargs):
@@ -172,7 +171,7 @@ class MongoModel(object):
     @classmethod
     def get(cls, id):
         can = isinstance(id, str) and id.isdigit()
-        if can == True:
+        if can is True:
             id = int(id)
         return cls.find_one(id=id)
 
