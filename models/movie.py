@@ -20,6 +20,7 @@ class Movie(MongoModel):
             ('type', str, ''),
             ('status', str, ''),
             ('establishDate', str, ''),
+            ('mark', str, ''),
         ]
         fields.extend(super()._fields())
         return fields
