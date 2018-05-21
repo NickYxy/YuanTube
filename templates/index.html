@@ -5,17 +5,6 @@
             <div class="panel-heading">
                 <h3 class="panel-title">浩瀚宇宙</h3>
             </div>
-            <div class="panel-body">
-                {% if u.is_clients() %}
-                    <a href="{{ url_for('user.products_bought') }}">已购产品列表</a>
-                    <a href="{{ url_for('user.records') }}">交易记录</a>
-                {% else %}
-                    {% if u.is_admin() %}
-                        <a href="{{ url_for('admin.users_arrange') }}">待分配用户</a>
-                    {% endif %}
-                    <a href="{{ url_for('admin.users_check') }}">待审核用户</a>
-                {% endif %}
-            </div>
         </div>
         <div class="div-form sign-flow panel panel-default">
             <div class="panel-heading">
