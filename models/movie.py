@@ -21,6 +21,7 @@ class Movie(MongoModel):
             ('status', str, ''),
             ('establishDate', str, ''),
             ('mark', str, ''),
+            ('comments', str, ''),
         ]
         fields.extend(super()._fields())
         return fields
@@ -93,21 +94,21 @@ class Movie(MongoModel):
         l.reverse()
         return l
 
-    def pdf_upload(self, file, file_type='contract'):
-        allowed_type = app.config['ALLOWED_UPLOAD_TYPE']
-        ext = file.filename.split('.')[-1].lower()
-        if file.filename != '' and ext in allowed_type:
-            filename = '{}_{}.{}'.format(self.uuid, file_type, ext)
-            # 如果没有图片保存路径就重新创建该文件
-            if not os.path.exists(app.config['PRODUCT_PDF_DIR']):
-                try:
-                    os.mkdir(app.config['PRODUCT_PDF_DIR'])
-                except:
-                    return False
-            path = os.path.join(app.config['PRODUCT_PDF_DIR'], filename)
-            file.save(path)
-            setattr(self, file_type, filename)
-            self.save()
-            return True
-        else:
-            return False
+    # def pdf_upload(self, file, file_type='contract'):
+    #     allowed_type = app.config['ALLOWED_UPLOAD_TYPE']
+    #     ext = file.filename.split('.')[-1].lower()
+    #     if file.filename != '' and ext in allowed_type:
+    #         filename = '{}_{}.{}'.format(self.uuid, file_type, ext)
+    #         # 如果没有图片保存路径就重新创建该文件
+    #         if not os.path.exists(app.config['PRODUCT_PDF_DIR']):
+    #             try:
+    #                 os.mkdir(app.config['PRODUCT_PDF_DIR'])
+    #             except:
+    #                 return False
+    #         path = os.path.join(app.config['PRODUCT_PDF_DIR'], filename)
+    #         file.save(path)
+    #         setattr(self, file_type, filename)
+    #         self.save()
+    #         return True
+    #     else:
+    #         return False
