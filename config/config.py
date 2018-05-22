@@ -6,14 +6,14 @@ import os
 # ------------------------- 通用配置 --------------------------
 config_dict = dict(
     USER_AVATAR_DIR='static/user_avatar/',
-    PRODUCT_PIC_DIR='static/product_pic/',
+    MOVIE_PIC_DIR='static/product_pic/',
     # PRODUCT_PDF_DIR=os.path.join(os.path.dirname(os.path.dirname(__file__)), "static", "product_pdf"),
     # RECORD_PDF_DIR=os.path.join(os.path.dirname(os.path.dirname(__file__)), "static", "record_pdf"),
     # UPLOAD_FILE_DIR=os.path.join(os.path.dirname(os.path.dirname(__file__)), "static", "upload_file"),
     # UPLOAD_REPORT_DIR=os.path.join(os.path.dirname(os.path.dirname(__file__)), "static", "upload_report"),
     # PROFILE_PIC_DIR=os.path.join(os.path.dirname(os.path.dirname(__file__)), "static", "profile_pic"),
     # QUESTIONNAIRE_FILE_DIR=os.path.join(os.path.dirname(os.path.dirname(__file__)), "static", "questionnaire"),
-    PRODUCT_PIC_EXT='png',
+    MOVIE_PIC_EXT='png',
     CDN_URL='http://opguqe876.bkt.clouddn.com/',
     CDN_USER_AVATAR_DIR='/user_avatar/',
     CDN_PRODUCT_PIC_DIR='/product_pic/',

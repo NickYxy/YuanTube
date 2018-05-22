@@ -32,7 +32,7 @@ class Movie(MongoModel):
         valid_name = cls.find_one(name=name) is None
         msgs = []
         if not valid_name:
-            message = '该名称已存在'
+            message = '该影片已存在'
             msgs.append(message)
         status = valid_name
         return status, msgs
@@ -47,8 +47,8 @@ class Movie(MongoModel):
         allowed_type = ['jpg', 'jpeg', 'gif', 'png']
         upload_name = pic.filename
         if upload_name != '' and upload_name.split('.')[-1] in allowed_type:
-            path = app.config['PRODUCT_PIC_DIR']
-            ext = app.config['PRODUCT_PIC_EXT']
+            path = app.config['MOVIE_PIC_DIR']
+            ext = app.config['MOVIE_PIC_EXT']
             fullname = '{}{}.{}'.format(path, str(self.id), ext)
             pic.save(fullname)
             self.pic = '/' + fullname
@@ -67,22 +67,22 @@ class Movie(MongoModel):
     def pic_upload(self, pic):
         allowed_type = app.config['ALLOWED_UPLOAD_TYPE']
         if pic.filename != '' and pic.filename.split('.')[-1] in allowed_type and len(self.pics) <= 20:
-            filename = '{}_{}.{}'.format(self.uuid, timestamp(), app.config['PRODUCT_PIC_EXT'])
-            _file = '../' + app.config['PRODUCT_PIC_DIR'] + filename
+            filename = '{}_{}.{}'.format(self.uuid, timestamp(), app.config['MOVIE_PIC_EXT'])
+            _file = '../' + app.config['MOVIE_PIC_DIR'] + filename
             _root = os.path.dirname(os.path.abspath(__file__))
             path = os.path.join(_root, _file)
             pic.save(path)
             self.pics.append(filename)
             self.save()
 
-            return url_for('static', filename='product_pic/' + filename)
+            return url_for('static', filename='movie_pic/' + filename)
         else:
             return False
 
     def pic_del(self, pic):
         self.pics.remove(pic)
         self.save()
-        _file = '../' + app.config['PRODUCT_PIC_DIR'] + pic
+        _file = '../' + app.config['MOVIE_PIC_DIR'] + pic
         _root = os.path.dirname(os.path.abspath(__file__))
         path = os.path.join(_root, _file)
         os.remove(path)
@@ -90,7 +90,7 @@ class Movie(MongoModel):
 
     @property
     def pics_url(self):
-        l = [url_for('static', filename='product_pic/' + p) for p in self.pics]
+        l = [url_for('static', filename='movie_pic/' + p) for p in self.pics]
         l.reverse()
         return l
 
