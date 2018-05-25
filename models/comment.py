@@ -16,13 +16,10 @@ class Comment(MongoModel):
     def _fields(cls):
         fields = [
             ('username', str, ''),
-            ('mobile', str, ''),
-            ('email', str, ''),
-            ('password', str, ''),
-            ('avatar', str, 'default.png'),
-            ('role', str, 'user'),
-            ('salt', str, 'q43129dhs*3'),
-            ('status', str, 'phone_unchecked'),
+            ('userid', str, ''),
+            ('comments', str, ''),
+            ('comment_time', str, ''),
+            ('level', str, 'default.png'),
         ]
         fields.extend(super()._fields())
         return fields
