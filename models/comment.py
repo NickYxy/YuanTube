@@ -19,7 +19,7 @@ class Comment(MongoModel):
             ('userid', str, ''),
             ('comments', str, ''),
             ('comment_time', str, ''),
-            ('level', str, 'default.png'),
+            ('level', str, ''),
         ]
         fields.extend(super()._fields())
         return fields
