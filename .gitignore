@@ -103,22 +103,22 @@ static/emoji/
 
 # avatar
 static/user_avatar/*_*.png
-static/product_pic/*.png
-static/profile_pic/*.png
+static/user_avatar/*.jpg
+static/user_avatar/*.jpeg
+static/user_avatar/*.png
+static/user_avatar/*.gif
+
 
 #files
-static/files/*.jpg
-static/files/*.pdf
-static/files/*.png
+static/movies/*.mp4
+static/movies/*.MPEG4
+static/movies/*.Ogg
+static/movies/*.WebM
 
-#product_pdf
-static/product_pdf/*
 
-#record_pdf
-static/record_pdf/*
-
-#upload_file
-static/upload_file/*
-
-#upload_report
-static/upload_report/*
+# movie cover
+static/movie_pic/*_*.png
+static/movie_pic/*.jpg
+static/movie_pic/*.jpeg
+static/movie_pic/*.png
+static/movie_pic/*.gif

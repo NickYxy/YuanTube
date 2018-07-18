@@ -16,6 +16,7 @@ def md5_encode(string):
     m = hashlib.md5(string.encode('ascii'))
     return m.hexdigest()
 
+
 class MsgCode(MongoModel):
     @classmethod
     def _fields(cls):

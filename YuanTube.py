@@ -5,10 +5,10 @@ from flask import render_template
 from flask import request
 from flask_script import Manager, Shell, Command
 
-
 app = Flask(__name__)
 
 manager = Manager(app)
+
 
 def make_shell_context():
     from models import db
@@ -55,7 +55,7 @@ def server():
     config = dict(
         debug=True,
         host='0.0.0.0',
-        port=8001,
+        port=8003,
     )
     app.run(**config)
 
