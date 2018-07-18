@@ -1,0 +1,63 @@
+<div class="page-sidebar-wrapper">
+	<!-- BEGIN SIDEBAR -->
+	<!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+	<!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+	<div class="page-sidebar navbar-collapse collapse">
+		<!-- BEGIN SIDEBAR MENU -->
+		<!-- DOC: Apply "page-sidebar-menu-light" class right after "page-sidebar-menu" to enable light sidebar menu style(without borders) -->
+		<!-- DOC: Apply "page-sidebar-menu-hover-submenu" class right after "page-sidebar-menu" to enable hoverable(hover vs accordion) sub menu mode -->
+		<!-- DOC: Apply "page-sidebar-menu-closed" class right after "page-sidebar-menu" to collapse("page-sidebar-closed" class must be applied to the body element) the sidebar sub menu mode -->
+		<!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+		<!-- DOC: Set data-keep-expand="true" to keep the submenues expanded -->
+		<!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+		<ul class="page-sidebar-menu  page-header-fixed " data-keep-expanded="false" data-auto-scroll="true"
+			data-slide-speed="200" style="padding-top: 20px">
+			<!-- DOC: To remove the sidebar toggler from the sidebar you just need to completely remove the below "sidebar-toggler-wrapper" LI element -->
+			<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+			<li class="sidebar-toggler-wrapper hide">
+				<div class="sidebar-toggler">
+					<span></span>
+				</div>
+			</li>
+			<!-- END SIDEBAR TOGGLER BUTTON -->
+			<!-- DOC: To remove the search box from the sidebar you just need to completely remove the below "sidebar-search-wrapper" LI element -->
+			{% if u %}
+				{% if u.is_admin() %}
+					<li class="nav-item start">
+						<a href="javascript:" class="nav-link nav-toggle">
+							<i class="icon-graduation"></i>
+							<span class="title">机构管理</span>
+							<span class="arrow"></span>
+						</a>
+					</li>
+				{% endif %}
+			{% endif %}
+
+		</ul>
+		<!-- END SIDEBAR MENU -->
+		<!-- END SIDEBAR MENU -->
+	</div>
+	<!-- END SIDEBAR -->
+</div>
+<script>
+    $(document).ready(function () {
+        let url = window.location.href
+        let aList = $('.page-sidebar-menu a')
+        url = url.split('?')[0]
+        for (let i of aList) {
+            if (url === i.href.split('?')[0]) {
+                let liSelf = $(i).closest('.nav-item')
+                liSelf.addClass('active open')
+                let liParent = liSelf.closest('.sub-menu').closest('.nav-item')
+                if(liParent.length === 0) {
+                    liParent = liSelf
+                }
+                liParent.addClass('active open')
+                let navLink = liParent.find('>:first-child')
+                let arrow = navLink.find('.arrow')
+                arrow.addClass('open')
+                navLink.append(`<span class="selected"></span>`)
+            }
+        }
+    })
+</script>

@@ -22,6 +22,7 @@ class Movie(MongoModel):
             ('establishDate', str, ''),
             ('mark', str, ''),
             ('comments', str, ''),
+            ('cover', str, ''),
         ]
         fields.extend(super()._fields())
         return fields

@@ -8,22 +8,22 @@ import hashlib
 import os
 import json
 
+
 class Role(Enum):
     admin = 1
     manager = 2
     user = 3
 
+
 bool_dict = {
-    'true':True,
-    'fasle':False,
+    'true': True,
+    'fasle': False,
 }
 
 
 class UserStatus(Enum):
     phone_checked = 1
     phone_unchecked = 2
-
-
 
 
 class User(MongoModel):
@@ -151,7 +151,6 @@ class User(MongoModel):
             u.reset_password(password)
             return True
         return False
-
 
     def reset_password(self, password):
         self.password = self.salted_password(password)

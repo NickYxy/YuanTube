@@ -26,19 +26,20 @@ def index():
 @main.route('login', methods=['POST'])
 def login():
     form = request.form
-    mobile = form.get('mobile', '')
-    u = User.find_one(mobile=mobile)
-    admin = User.find_one(username=mobile, role='admin')
-    if admin and admin.validate_login(form):
-        session['uid'] = admin.id
-        return redirect(url_for('index.index'))
-    elif u is not None and u.validate_login(form):
+    name = form.get('username', '')
+    u = User.find_one(name=name)
+    if u is not None and u.validate_login(form):
         session['uid'] = u.id
+        Log.log(u, '登录账号', request, '[{}] 登录系统'.format(u.name))
+        if u.role == 'teacher':
+            return redirect(url_for('admin.courses'))
         return redirect(url_for('index.index'))
-    elif not u and not admin:
-        flash('此手机号未注册！', 'warning')
+    elif not u:
+        flash('此用户未注册', 'warning')
+        return redirect(url_for('user.index'))
     else:
-        flash('用户名密码错误！', 'warning')
+        flash('用户名密码错误', 'warning')
+        return redirect(url_for('user.index'))
 
 
 def current_user():
@@ -140,3 +141,9 @@ def update_password():
         return redirect(url_for('user.update_password_page'))
 
 
+@main.route('/logout')
+@login_required
+def logout():
+    p = session.pop('uid')
+    flash('账号已安全退出', 'success')
+    return redirect(url_for('index.index'))

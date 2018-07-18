@@ -28,6 +28,11 @@ def register_routes(app):
     app.register_blueprint(routes_img, url_prefix='/img')
 
 
+def register_filters(app):
+    from user_util.filters import filters
+    app.jinja_env.filters.update(filters)
+
+
 # ----------------Config Options----------------- #
 def configure_app():
     from config import key
@@ -51,6 +56,8 @@ def configured_app():
 @manager.command
 def server():
     app.config['TEMPLATES_AUTO_RELOAD'] = True
+    # 当 static 文件夹中的文件修改时，响应 200，避免浏览器的主动缓存策略
+    app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
     app.jinja_env.auto_reload = True
     config = dict(
         debug=True,
