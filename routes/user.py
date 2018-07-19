@@ -8,8 +8,10 @@ from flask import url_for
 from flask import Response
 from flask import session
 from flask import flash
+from models.log import Log
 from models.user import User
 from functools import wraps
+from . import *
 from models.msgcode import MsgCode
 from user_util.utils import *
 import json
@@ -23,16 +25,19 @@ def index():
     return render_template('user/login.html')
 
 
-@main.route('login', methods=['POST'])
+@main.route('/login', methods=['POST'])
 def login():
     form = request.form
     name = form.get('username', '')
     u = User.find_one(name=name)
+    m = User.all()
+    print(name, m, u)
     if u is not None and u.validate_login(form):
+        print(u.validate_login(form))
         session['uid'] = u.id
         Log.log(u, '登录账号', request, '[{}] 登录系统'.format(u.name))
-        if u.role == 'teacher':
-            return redirect(url_for('admin.courses'))
+        if u.role == 'admin':
+            return redirect(url_for('index.index'))
         return redirect(url_for('index.index'))
     elif not u:
         flash('此用户未注册', 'warning')
@@ -40,25 +45,6 @@ def login():
     else:
         flash('用户名密码错误', 'warning')
         return redirect(url_for('user.index'))
-
-
-def current_user():
-    uid = int(session.get('uid', -1))
-    u = User.get(uid)
-    return u
-
-
-def login_required(f):
-    @wraps(f)
-    def function(*args, **kwargs):
-        if current_user() is None:
-            return redirect(url_for('user.index'))
-        # 临时禁止用户登录
-        # flash('系统维护', 'danger')
-        # return redirect(url_for('user.index'))
-        return f(*args, **kwargs)
-
-    return function
 
 
 @main.route('/register')

@@ -1,8 +1,8 @@
-__author__ = 'nickyuan'
-
 from user_util.utils import *
+
+# mongodb config
 from config import config
-# 导入db配置
+
 db = config.db
 
 
@@ -11,12 +11,15 @@ def timestamp():
 
 
 class ModelMixin(object):
-    pass
+    def __repr__(self):
+        class_name = self.__class__.__name__
+        properties = ('{0} = {1}'.format(k, v) for k, v in self.__dict__.items())
+        return '<{0}: \n  {1}\n>'.format(class_name, '\n  '.join(properties))
 
 
 def next_id(name):
     query = {
-        'name': name
+        'name': name,
     }
     update = {
         '$inc': {
@@ -55,13 +58,14 @@ class MongoModel(object):
     def __repr__(self):
         class_name = self.__class__.__name__
         properties = ('{0} = {1}'.format(k, v) for k, v in self.__dict__.items())
-        return '<{0}: \n {1}\n>'.format(class_name, '\n '.join(properties))
+        return '<{0}: \n  {1}\n>'.format(class_name, '\n  '.join(properties))
 
     @classmethod
     def new(cls, form=None, **kwargs):
         name = cls.__name__
         m = cls()
         fields = cls._fields()
+        fields.remove('_id')
         if form is None:
             form = {}
 
@@ -76,7 +80,6 @@ class MongoModel(object):
                 setattr(m, k, v)
             else:
                 raise KeyError
-
         m.id = next_id(name)
         ts = int(time.time())
         m.ct = ts
@@ -171,7 +174,7 @@ class MongoModel(object):
     @classmethod
     def get(cls, id):
         can = isinstance(id, str) and id.isdigit()
-        if can is True:
+        if can == True:
             id = int(id)
         return cls.find_one(id=id)
 

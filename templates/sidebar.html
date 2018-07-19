@@ -26,10 +26,45 @@
 					<li class="nav-item start">
 						<a href="javascript:" class="nav-link nav-toggle">
 							<i class="icon-graduation"></i>
-							<span class="title">机构管理</span>
+							<span class="title">登陆管理</span>
 							<span class="arrow"></span>
 						</a>
 					</li>
+					<li class="nav-item start">
+						<a href="javascript:" class="nav-link nav-toggle">
+							<i class="icon-graduation"></i>
+							<span class="title">电影管理</span>
+							<span class="arrow"></span>
+						</a>
+						<ul class="sub-menu">
+							<li class="nav-item ">
+								<a href="javascript:" class="nav-link ">
+									<i class="icon-list"></i>
+									<span class="title">电影列表</span>
+								</a>
+							</li>
+							<li class="nav-item ">
+								<a href="javascript:" class="nav-link ">
+									<i class="icon-cloud-upload"></i>
+									<span class="title">上传电影</span>
+								</a>
+							</li>
+							<li class="nav-item ">
+								<a href="javascript:" class="nav-link ">
+									<i class="fa fa-tv"></i>
+									<span class="title">电影分类</span>
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li class="nav-item start">
+						<a href="javascript:" class="nav-link nav-toggle">
+							<i class="icon-graduation"></i>
+							<span class="title">会员管理</span>
+							<span class="arrow"></span>
+						</a>
+					</li>
+
 				{% endif %}
 			{% endif %}
 
@@ -49,7 +84,7 @@
                 let liSelf = $(i).closest('.nav-item')
                 liSelf.addClass('active open')
                 let liParent = liSelf.closest('.sub-menu').closest('.nav-item')
-                if(liParent.length === 0) {
+                if (liParent.length === 0) {
                     liParent = liSelf
                 }
                 liParent.addClass('active open')

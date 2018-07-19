@@ -17,12 +17,14 @@ def make_shell_context():
 
 # ----------------BluePrints Register----------------- #
 def register_routes(app):
+    from routes.index import main as routes_index
     from routes.user import main as routes_user
     from routes.movie import main as routes_movie
     from routes.admin import main as routes_admin
     from routes.img import main as routes_img
 
     app.register_blueprint(routes_user, url_prefix='/user')
+    app.register_blueprint(routes_index, url_prefix='/')
     app.register_blueprint(routes_movie, url_prefix='/movie')
     app.register_blueprint(routes_admin, url_prefix='/admin')
     app.register_blueprint(routes_img, url_prefix='/img')
@@ -40,6 +42,7 @@ def configure_app():
     from config.config import config_dict
     app.config.update(config_dict)
     register_routes(app)
+    register_filters(app)
     manager.add_command('shell', Shell(make_context=make_shell_context))
     # 设置 log, 否则输出会被 gunicorn 吃掉
     if not app.debug:

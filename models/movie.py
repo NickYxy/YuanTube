@@ -8,10 +8,11 @@ from flask import url_for
 
 import os
 
-#评分的展示？
+
+# 评分的展示？
 
 
-class Movie(MongoModel):
+class Movies(MongoModel):
     @classmethod
     def _fields(cls):
         fields = [
@@ -23,6 +24,7 @@ class Movie(MongoModel):
             ('mark', str, ''),
             ('comments', str, ''),
             ('cover', str, ''),
+            ('content', str, ''),
         ]
         fields.extend(super()._fields())
         return fields
@@ -42,7 +44,6 @@ class Movie(MongoModel):
     def new(cls, form):
         m = super().new(form)
         return m
-
 
     def update_pic(self, pic):
         allowed_type = ['jpg', 'jpeg', 'gif', 'png']
@@ -91,25 +92,6 @@ class Movie(MongoModel):
 
     @property
     def pics_url(self):
-        l = [url_for('static', filename='movie_pic/' + p) for p in self.pics]
-        l.reverse()
-        return l
-
-    # def pdf_upload(self, file, file_type='contract'):
-    #     allowed_type = app.config['ALLOWED_UPLOAD_TYPE']
-    #     ext = file.filename.split('.')[-1].lower()
-    #     if file.filename != '' and ext in allowed_type:
-    #         filename = '{}_{}.{}'.format(self.uuid, file_type, ext)
-    #         # 如果没有图片保存路径就重新创建该文件
-    #         if not os.path.exists(app.config['PRODUCT_PDF_DIR']):
-    #             try:
-    #                 os.mkdir(app.config['PRODUCT_PDF_DIR'])
-    #             except:
-    #                 return False
-    #         path = os.path.join(app.config['PRODUCT_PDF_DIR'], filename)
-    #         file.save(path)
-    #         setattr(self, file_type, filename)
-    #         self.save()
-    #         return True
-    #     else:
-    #         return False
+        url = [url_for('static', filename='movie_pic/' + p) for p in self.pics]
+        url.reverse()
+        return url

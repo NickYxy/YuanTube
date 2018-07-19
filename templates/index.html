@@ -1,41 +1,52 @@
 {% extends 'base.html' %}
 {% block body %}
-    <div class="container">
-        <div class="div-form sign-flow panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">浩瀚宇宙</h3>
-            </div>
-        </div>
-        <div class="div-form sign-flow panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">登录信息</h3>
-            </div>
-            <div class="panel-body">
-                <table class="table " data-toggle="table" id="log-table" data-pagination="true" data-page-size="10">
-                    <thead>
-                    <tr>
-                        <th class="th-col-1">操作账号</th>
-                        <th class="th-col-1">操作模块</th>
-                        <th class="th-col-1">操作系统</th>
-                        <th class="th-col-1">操作ip</th>
-                        <th class="th-col-1">浏览器</th>
-                        <th class="th-col-2">时间</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for m in ms %}
-                        <tr data-id={{ m.id }}>
-                            <td>{{ m.mobile }} {{ m.user_name }}</td>
-                            <td>{{ m.action }}</td>
-                            <td>{{ m.platform }}</td>
-                            <td>{{ m.ip }}</td>
-                            <td>{{ m.browser }}</td>
-                            <td>{{ m.ct | time_str }}</td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+	<!-- BEGIN PAGE BAR -->
+	<div class="page-bar">
+		<ul class="page-breadcrumb">
+			<li>
+				<a class="active" href="{{ url_for('index.index') }}">Home</a>
+			</li>
+		</ul>
+	</div>
+	<!-- END PAGE BAR -->
+	<!-- BEGIN PAGE TITLE-->
+	<h1 class="page-title">
+		<i class="icon-notebook font-green"></i>
+		<span class="caption-subject font-green sbold uppercase">浩瀚宇宙等着你来探索~</span>
+	</h1>
+	<!-- END PAGE TITLE-->
+	<div class="portlet light bordered">
+		<div class="portlet-title">
+			<div class="caption font-green">
+				<i class="icon-settings font-green"></i>
+				<span class="caption-subject bold uppercase"> 登陆信息 </span>
+			</div>
+		</div>
+		<div class="portlet-body form">
+			<table class="table " data-toggle="table" id="log-table" data-pagination="true" data-page-size="10">
+				<thead>
+				<tr>
+					<th class="th-col-1">操作账号</th>
+					<th class="th-col-1">操作模块</th>
+					<th class="th-col-1">操作系统</th>
+					<th class="th-col-1">操作ip</th>
+					<th class="th-col-1">浏览器</th>
+					<th class="th-col-2">时间</th>
+				</tr>
+				</thead>
+				<tbody>
+				{% for m in ms %}
+					<tr data-id={{ m.id }}>
+						<td>{{ m.mobile }} {{ m.user_name }}</td>
+						<td>{{ m.action }}</td>
+						<td>{{ m.platform }}</td>
+						<td>{{ m.ip }}</td>
+						<td>{{ m.browser }}</td>
+						<td>{{ m.ct | time_str }}</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
 {% endblock %}

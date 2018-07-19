@@ -6,7 +6,6 @@ from . import timestamp
 from flask import current_app as app
 import hashlib
 import os
-import json
 
 
 class Role(Enum):
@@ -30,6 +29,7 @@ class User(MongoModel):
     @classmethod
     def _fields(cls):
         fields = [
+            ('name', str, ''),
             ('username', str, ''),
             ('mobile', str, ''),
             ('email', str, ''),
@@ -38,6 +38,9 @@ class User(MongoModel):
             ('role', str, 'user'),
             ('salt', str, 'q43129dhs*3'),
             ('status', str, 'phone_unchecked'),
+            ('date_start', str, ''),
+            ('date_end', str, ''),
+            ('vip', str, ''),
         ]
         fields.extend(super()._fields())
         return fields
@@ -91,6 +94,18 @@ class User(MongoModel):
             self.avatar = 'default.png'
         self.save()
         return self
+
+    @classmethod
+    def insert_admin(cls):
+        from config import key
+        u = User.find_one(name="admin")
+        if not u:
+            form = {
+                'name': 'admin',
+                'role': 'admin',
+                'password': key.admin_password,
+            }
+            cls.new(form)
 
     def update_dict(self, **kwargs):
         for k, v in kwargs.items():

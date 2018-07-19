@@ -13,6 +13,7 @@ from user_util.utils import *
 import json
 import random
 
+
 def current_user():
     uid = int(session.get('uid', -1))
     u = User.get(uid)
@@ -44,41 +45,6 @@ def admin_required(f):
     return function
 
 
-def manager_required(f):
-    @wraps(f)
-    def function(*args, **kwargs):
-        if current_user() is None:
-            return redirect(url_for('user.index'))
-        if not current_user().is_manager():
-            return redirect(url_for('user.index'))
-        return f(*args, **kwargs)
-
-    return function
-
-
-def clients_required(f):
-    @wraps(f)
-    def function(*args, **kwargs):
-        if current_user() is None:
-            return redirect(url_for('user.index'))
-        if not current_user().is_clients():
-            return redirect(url_for('user.index'))
-        return f(*args, **kwargs)
-    return function
-
-
-def finance_required(f):
-    @wraps(f)
-    def function(*args, **kwargs):
-        if current_user() is None:
-            return redirect(url_for('user.index'))
-        if not current_user().is_finance():
-            return redirect(url_for('user.index'))
-        return f(*args, **kwargs)
-
-    return function
-
-
 def cart_not_empty_required(f):
     @wraps(f)
     def function(*args, **kwargs):
@@ -98,5 +64,3 @@ def email_verify_required(f):
         return f(*args, **kwargs)
 
     return function
-
-

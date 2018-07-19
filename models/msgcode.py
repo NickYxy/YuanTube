@@ -1,8 +1,9 @@
-__author__ = 'nickyuan'
+# -*- coding: utf-8 -*-
 from . import MongoModel
 from enum import Enum
 from flask import current_app as app
 import requests
+import random
 from config import key
 import hashlib
 
@@ -31,7 +32,6 @@ class MsgCode(MongoModel):
     @classmethod
     def new(cls, form):
         m = super().new(form)
-        import random
         vcode = str(random.randint(100000, 999999))
         m.code = vcode
         m.save()

@@ -5,14 +5,9 @@ import os
 
 # ------------------------- 通用配置 --------------------------
 config_dict = dict(
-    USER_AVATAR_DIR='static/user_avatar/',
-    MOVIE_PIC_DIR='static/product_pic/',
-    # PRODUCT_PDF_DIR=os.path.join(os.path.dirname(os.path.dirname(__file__)), "static", "product_pdf"),
-    # RECORD_PDF_DIR=os.path.join(os.path.dirname(os.path.dirname(__file__)), "static", "record_pdf"),
-    # UPLOAD_FILE_DIR=os.path.join(os.path.dirname(os.path.dirname(__file__)), "static", "upload_file"),
-    # UPLOAD_REPORT_DIR=os.path.join(os.path.dirname(os.path.dirname(__file__)), "static", "upload_report"),
-    # PROFILE_PIC_DIR=os.path.join(os.path.dirname(os.path.dirname(__file__)), "static", "profile_pic"),
-    # QUESTIONNAIRE_FILE_DIR=os.path.join(os.path.dirname(os.path.dirname(__file__)), "static", "questionnaire"),
+    MOVIE_PIC_DIR=os.path.join(os.path.dirname(os.path.dirname(__file__)), "static", "movie_pic"),
+    MOVIE_FILE_DIR=os.path.join(os.path.dirname(os.path.dirname(__file__)), "static", "movies"),
+    USER_AVATAR_DIR=os.path.join(os.path.dirname(os.path.dirname(__file__)), "static", "user_avatar"),
     MOVIE_PIC_EXT='png',
     # CDN_URL='http://opguqe876.bkt.clouddn.com/',
     # CDN_USER_AVATAR_DIR='/user_avatar/',
@@ -27,8 +22,7 @@ config_dict = dict(
     ALLOWED_UPLOAD_TYPE=['jpg', 'jpeg', 'gif', 'png', 'ico', 'pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'],
 )
 
-
-# ------------------------- MongoDB --------------------------
+# mongodb config
 db_name = 'YuanTube'
-client = MongoClient("mongodb://localhost:27013")
+client = MongoClient("mongodb://localhost:27017")
 db = client[db_name]
