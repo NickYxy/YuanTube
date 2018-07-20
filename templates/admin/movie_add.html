@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% block body %}
+	<!-- BEGIN PAGE BAR -->
+	<div class="page-bar">
+		<ul class="page-breadcrumb">
+			<li>
+				<a class="active" href="{{ url_for('index.index') }}">Home</a>
+				<i class="fa fa-angle-right"></i>
+				<a href="{{ url_for('movie.movies') }}">电影列表</a>
+				<i class="fa fa-angle-right"></i>
+			</li>
+			<li>
+				<span>新增电影</span>
+			</li>
+		</ul>
+	</div>
+	<!-- END PAGE BAR -->
+	<!-- BEGIN PAGE TITLE-->
+	<h1 class="page-title">
+		<i class="icon-plus font-green"></i>
+		<span class="caption-subject font-green sbold uppercase">添加电影</span>
+	</h1>
+	<!-- END PAGE TITLE-->
+	<div class="portlet light bordered">
+		<div class="portlet-body">
+			<div class="form-horizontal">
+				<form method=POST enctype=multipart/form-data
+					  action="{{ url_for('admin.movie_add') }}">
+					<div class="form-group form-md-line-input">
+						<label class="col-md-2 control-label" for="form_control_1">电影名称</label>
+						<div class="col-md-10">
+							<input required type="text" class="form-control" name="name" autocomplete="off"
+								   id="form_control_1"
+								   placeholder="请输入电影名">
+							<div class="form-control-focus"></div>
+							<span class="help-block">必填：请输入电影名</span>
+						</div>
+					</div>
+					<div class="form-group form-md-line-input">
+						<label class="col-md-2 control-label" for="form_control_2">电影分类</label>
+						<div class="col-md-10">
+							<select required class="form-control" name="category" id="form_control_2">
+								<option value="">请选择分类</option>
+								{% for cs in c %}
+									<option value="{{ cs.name }}">{{ cs.name }}</option>
+								{% endfor %}
+							</select>
+							<div class="form-control-focus"></div>
+						</div>
+					</div>
+					<div class="form-group form-md-radios">
+						<label class="col-md-2 control-label">课程状态</label>
+						<div class="md-radio-inline">
+							<div class="col-md-10">
+								<div class="md-radio has-success">
+									<input type="radio" id="radio6" name="status" value="visible"
+										   class="md-radiobtn">
+									<label for="radio6">
+										<span class="inc"></span>
+										<span class="check"></span>
+										<span class="box"></span> 可见 </label>
+								</div>
+								<div class="md-radio has-warning">
+									<input type="radio" id="radio7" name="status" value="invisible"
+										   class="md-radiobtn">
+									<label for="radio7">
+										<span class="inc"></span>
+										<span class="check"></span>
+										<span class="box"></span> 不可见 </label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-group form-md-line-input">
+						<label class="col-md-2 control-label">课程封面</label>
+						<div class="col-md-10">
+							<div class="fileinput fileinput-new" data-provides="fileinput">
+								<div class="input-group">
+									<div id="picUpload" class="form-control uneditable-input input-fixed"
+										 data-trigger="fileinput">
+										<i class="fa fa-file fileinput-exists"></i>&nbsp;
+										<span class="fileinput-filename">
+									</span>
+									</div>
+									<span class="input-group-addon btn default btn-file">
+                                                                    <span class="fileinput-new"> 选择图片 </span>
+                                                                    <span class="fileinput-exists"> 重新选择 </span>
+                                                                    <input type="hidden" value="">
+																	<input type="file" id="coursePic" name="course_pic">
+									</span>
+									<a href="javascript:;" class="input-group-addon btn red fileinput-exists"
+									   data-dismiss="fileinput"> 移除 </a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-actions">
+						<div class="row">
+							<div class="col-md-offset-5 col-md-3">
+								<a class="btn default" type="button"
+								   href="{{ url_for('admin.courses') }}">&nbsp;&nbsp;取消&nbsp;&nbsp;
+								</a>
+								<button class="btn green" type="submit"
+										href="{{ url_for('admin.course_update', uuid=m.uuid) }}">下一步
+								</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+{% endblock %}
